@@ -1,5 +1,8 @@
-# Multi-stage build for optimized production image
-FROM node:18-alpine AS builder
+# Simple single container with both app and nginx
+FROM node:18-alpine
+
+# Install nginx and openssl
+RUN apk add --no-cache nginx openssl
 
 # Set working directory
 WORKDIR /app
@@ -7,45 +10,48 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install all dependencies (including dev dependencies for build)
+# Install dependencies
 RUN npm ci --only=production && npm cache clean --force
 
-# Production stage
-FROM node:18-alpine AS production
-
-# Create app user for security
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001
-
-# Set working directory
-WORKDIR /app
-
-# Copy node_modules from builder stage
-COPY --from=builder /app/node_modules ./node_modules
-
 # Copy application files
-COPY --chown=nodejs:nodejs . .
+COPY . .
 
 # Create data directory for database
 RUN mkdir -p /app/data && \
-    touch /app/data/notes.db && \
-    chown -R nodejs:nodejs /app/data
+    chown -R node:node /app/data
+
+# Create nginx directories
+RUN mkdir -p /etc/nginx/ssl && \
+    mkdir -p /var/log/nginx && \
+    mkdir -p /var/lib/nginx
+
+# Generate SSL certificates
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/nginx/ssl/key.pem \
+    -out /etc/nginx/ssl/cert.pem \
+    -subj "/C=US/ST=State/L=City/O=Organization/CN=localhost"
+
+# Copy nginx configuration
+COPY nginx-complete.conf /etc/nginx/nginx.conf
 
 # Set environment variables
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV DB_PATH=/app/data/notes.db
 
-# Switch to non-root user
-USER nodejs
+# Expose ports
+EXPOSE 8080 8443 8444
 
-# Expose port
-EXPOSE 3000
+# Create startup script
+RUN echo '#!/bin/sh' > /start.sh && \
+    echo 'nginx &' >> /start.sh && \
+    echo 'sleep 2' >> /start.sh && \
+    echo 'node server.js' >> /start.sh && \
+    chmod +x /start.sh
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
   CMD node -e "require('http').get('http://localhost:3000/api/user', (res) => { process.exit(res.statusCode === 401 ? 0 : 1) })"
 
-# Start the application
-CMD ["node", "server.js"]
-
+# Start both nginx and node
+CMD ["/start.sh"]

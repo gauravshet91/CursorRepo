@@ -37,7 +37,17 @@ A complete, production-ready notes application with user management, admin contr
 
 ## 🚀 **Quick Start**
 
-### **Pull and Run**
+### **Option 1: Deploy from Source**
+```bash
+# Clone the repository
+git clone <repository-url>
+cd notesapp2
+
+# Deploy the application
+./deploy.sh
+```
+
+### **Option 2: Pull and Run**
 ```bash
 # Pull the latest version
 docker pull gauravshet91/notesapp2:v1.2
@@ -128,16 +138,14 @@ SESSION_SECRET=your-super-secret-session-key-change-this
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd notes-app
+cd notesapp2
 
-# Build the image
-docker build -f Dockerfile-simple -t notesapp2:local .
+# Deploy locally
+./deploy.sh
 
-# Run locally
-docker run -d --name notes-app-local \
-  -p 8080:8080 -p 8443:8443 -p 8444:8444 \
-  -v notes_data:/app/data \
-  notesapp2:local
+# Or build manually
+docker build -t notesapp2:local .
+docker compose up -d
 ```
 
 ### **Custom Configuration**

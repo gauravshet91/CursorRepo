@@ -1,10 +1,14 @@
 services:
-  # Notes Application
-  notes-app:
-    build: 
+  # Complete Notes App with Frontend + Backend + Nginx
+  notes-app-simple:
+    build:
       context: .
-      dockerfile: Dockerfile
-    container_name: notes-app
+      dockerfile: Dockerfile-simple
+    container_name: notes-app-simple
+    ports:
+      - "8080:8080"   # HTTP
+      - "8443:8443"   # HTTPS
+      - "8444:8444"   # HTTP/2
     environment:
       - NODE_ENV=production
       - PORT=3000
@@ -19,35 +23,7 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-    networks:
-      - notes-network
-
-  # Nginx Reverse Proxy with HTTPS/HTTP2
-  nginx:
-    image: nginx:alpine
-    container_name: notes-nginx
-    ports:
-      - "8080:8080"
-      - "8443:8443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./ssl:/etc/nginx/ssl:ro
-    depends_on:
-      - notes-app
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    networks:
-      - notes-network
-
-networks:
-  notes-network:
-    driver: bridge
 
 volumes:
   notes_data:
     driver: local
-
