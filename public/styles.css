@@ -1,0 +1,539 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Login Page */
+.login-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-container h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+button {
+    width: 100%;
+    padding: 0.75rem;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background: #5a6fd8;
+}
+
+.error-message {
+    color: #e74c3c;
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Main App */
+#mainApp {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 100vh;
+}
+
+.app-header {
+    background: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-header h1 {
+    color: #333;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    padding: 0.5rem 1rem;
+    width: auto;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+.app-nav {
+    background: #fff3cd;
+    padding: 0 2rem;
+    display: flex;
+    gap: 0;
+    border-radius: 8px 8px 0 0;
+    border: 2px solid #ffc107;
+}
+
+.nav-btn {
+    background: #ffc107;
+    border: none;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+    width: auto;
+    color: #1e3a8a;
+    font-weight: 600;
+    border-right: 1px solid #f59e0b;
+}
+
+.nav-btn.active {
+    border-bottom-color: #1e40af;
+    background: #1e40af;
+    color: #fbbf24;
+    font-weight: 700;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.nav-btn:hover {
+    background: #f59e0b;
+    color: #1e3a8a;
+    transform: translateY(-1px);
+}
+
+.content-section {
+    flex: 1;
+    padding: 2rem;
+    background: white;
+    margin: 0 2rem 2rem 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.btn-primary {
+    background: #28a745;
+    width: auto;
+    padding: 0.5rem 1rem;
+}
+
+.btn-primary:hover {
+    background: #218838;
+}
+
+/* Notes */
+.notes-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.note-card {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.note-card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.note-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.note-content {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    max-height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.note-actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-small {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    width: auto;
+}
+
+.btn-danger {
+    background: #dc3545;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}
+
+/* Admin Panel - Yellow/Blue Theme */
+.admin-tabs {
+    display: flex;
+    margin-bottom: 2rem;
+    border-bottom: 3px solid #1e40af;
+    background: #fef3c7;
+    border-radius: 8px 8px 0 0;
+    border: 2px solid #f59e0b;
+}
+
+.admin-tab-btn {
+    background: #fbbf24;
+    border: none;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+    width: auto;
+    color: #1e3a8a;
+    font-weight: 600;
+    border-right: 1px solid #f59e0b;
+}
+
+.admin-tab-btn.active {
+    border-bottom-color: #1e40af;
+    background: #1e40af;
+    color: #fbbf24;
+    font-weight: 700;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.admin-tab-btn:hover {
+    background: #f59e0b;
+    color: #1e40af;
+    transform: translateY(-1px);
+}
+
+.users-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.user-card {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info-card {
+    flex: 1;
+}
+
+.user-username {
+    font-weight: 600;
+    color: #333;
+}
+
+.user-email {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.user-role {
+    background: #667eea;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    margin-left: 1rem;
+}
+
+.user-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Settings */
+.settings-form {
+    max-width: 500px;
+}
+
+.settings-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.settings-form input[type="number"] {
+    width: 100px;
+}
+
+.settings-form select {
+    width: 200px;
+    padding: 0.5rem;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+}
+
+.settings-form input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+.settings-form small {
+    display: block;
+    color: #666;
+    margin-top: 0.25rem;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    width: auto;
+    padding: 0;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-footer {
+    padding: 1rem 2rem;
+    border-top: 1px solid #dee2e6;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.modal-footer button {
+    width: auto;
+    padding: 0.5rem 1rem;
+}
+
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* Admin Tab Visibility - Yellow/Blue Theme */
+#adminTab {
+    background: #fbbf24 !important;
+    color: #1e3a8a !important;
+    font-weight: 700 !important;
+    border-radius: 5px 5px 0 0;
+    border: 2px solid #f59e0b !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+#adminTab:hover {
+    background: #f59e0b !important;
+    color: #1e40af !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+#adminTab.active {
+    background: #1e40af !important;
+    color: #fbbf24 !important;
+    border-bottom-color: #1e40af !important;
+    border: 2px solid #1e40af !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Settings Form Improvements - Yellow/Blue Theme */
+.settings-form {
+    max-width: 600px;
+    background: #fef3c7;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 2px solid #f59e0b;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.settings-form .form-group {
+    margin-bottom: 1.5rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 5px;
+    border: 1px solid #dee2e6;
+}
+
+.settings-form label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.settings-form input[type="number"] {
+    width: 120px;
+    padding: 0.5rem;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.settings-form select {
+    width: 250px;
+    padding: 0.5rem;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.settings-form input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 0.5rem;
+    accent-color: #667eea;
+}
+
+.settings-form small {
+    display: block;
+    color: #666;
+    margin-top: 0.25rem;
+    font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .app-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .content-section {
+        margin: 0 1rem 1rem 1rem;
+    }
+    
+    .notes-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .user-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .user-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+

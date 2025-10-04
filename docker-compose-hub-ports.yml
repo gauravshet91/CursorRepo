@@ -1,0 +1,27 @@
+services:
+  # Notes Application from Docker Hub
+  notes-app:
+    image: gauravshet91/notesapp1:latest
+    container_name: notes-app-hub
+    ports:
+      - "8080:3000"  # HTTP
+      - "8443:3000"  # HTTPS
+      - "8444:3000"  # HTTP/2
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - SESSION_SECRET=your-super-secret-session-key-change-this
+      - DB_PATH=/app/data/notes.db
+    volumes:
+      - notes_data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/user', (res) => { process.exit(res.statusCode === 401 ? 0 : 1) })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  notes_data:
+    driver: local
